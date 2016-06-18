@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Threading;
 
 namespace DungeonCrawler
 {
@@ -14,6 +15,15 @@ namespace DungeonCrawler
 
         Texture2D smileyImage;
         Vector2 smileyPosition;
+
+        Thread mainThread;
+        DungeonCrawlerMain.DungeonCrawlerMain main;
+        MonoResponder responder;
+
+        public Color BackgroundColour { get; set; } = Color.SteelBlue;
+
+        // TODO: Move to external class (Constants) and call from there
+        string gameWindowTitle = "Dungeon Crawler | #SeriousStudios | Development Build";
 
         public Game1()
         {
@@ -29,6 +39,10 @@ namespace DungeonCrawler
         /// </summary>
         protected override void Initialize()
         {
+            // Setup the basic window function of the game
+            Window.Title = gameWindowTitle;
+            Window.AllowUserResizing = false;
+
             // Set the starting position of the smileyImage
             //smileyPosition = new Vector2(0.0f, 0.0f);
             smileyPosition = Vector2.Zero;
@@ -48,6 +62,18 @@ namespace DungeonCrawler
 
             // Loads the Smiley.png into the smileImage variable
             smileyImage = Content.Load<Texture2D>("Smiley");
+
+            // Main thread
+            main = new DungeonCrawlerMain.DungeonCrawlerMain();
+            responder = new MonoResponder(this);
+            mainThread = new Thread(new ThreadStart(MainThreadStart));
+            // Start the thread
+            mainThread.Start();
+        }
+
+        void MainThreadStart()
+        {
+            main.Run(responder);
         }
 
         /// <summary>
@@ -107,7 +133,7 @@ namespace DungeonCrawler
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.SteelBlue);
+            GraphicsDevice.Clear(BackgroundColour);
 
             // Draw the smileyImage to the screen
             spriteBatch.Begin();
