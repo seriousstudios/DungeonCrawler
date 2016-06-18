@@ -10,7 +10,10 @@ namespace DungeonCrawlerMain
     {
         public void Run(IResponder responder)
         {
+            PlayerCharacterObject player = responder.CreatePlayerCharacter();
+
             responder.ChangeBackgroundColour();
+            responder.ShowPlayerCharacterInformation(player);
         }
     }
 }

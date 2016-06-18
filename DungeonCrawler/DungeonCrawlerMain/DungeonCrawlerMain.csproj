@@ -41,8 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbilityScoreAttribute.cs" />
+    <Compile Include="AgeAttribute.cs" />
+    <Compile Include="AllignmentAttribute.cs" />
+    <Compile Include="AttributeComponent.cs" />
     <Compile Include="DungeonCrawlerMain.cs" />
+    <Compile Include="GameObject.cs" />
+    <Compile Include="GlobalHelper.cs" />
+    <Compile Include="IntegerAttribute.cs" />
     <Compile Include="IResponder.cs" />
+    <Compile Include="PlayerCharacterObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
